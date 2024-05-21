@@ -17,7 +17,7 @@ public class GameController {
     public ResponseEntity<?> getAllGameApi() {
         var responseWrapper = gameDetailService.getAllGame();
 
-        if (responseWrapper.getHttpCode() != 500) {
+        if (responseWrapper.getHttpCode() == 500) {
             return ResponseEntity.status(responseWrapper.getHttpCode())
                     .body(responseWrapper.getErrMessage());
         }

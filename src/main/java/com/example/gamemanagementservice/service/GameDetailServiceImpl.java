@@ -35,7 +35,7 @@ public class GameDetailServiceImpl implements IGameDetail {
     @Override
     public ResponseWrapper<List<GameDetail>> getAllGame() {
         try {
-            List<GameDetail> gameDetailList = gameRepository.findAll();
+            List<GameDetail> gameDetailList = gameRepository.findAllGames();
 
             return gameDetailList.isEmpty() ?
                     ResponseWrapper.fromError("Not found any games", 404) :
