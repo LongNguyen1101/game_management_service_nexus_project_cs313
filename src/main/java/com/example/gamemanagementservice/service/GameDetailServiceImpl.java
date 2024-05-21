@@ -1,6 +1,7 @@
 package com.example.gamemanagementservice.service;
 
 import com.example.gamemanagementservice.models.GameDetail;
+import com.example.gamemanagementservice.payload.response.ResponseRecommend;
 import com.example.gamemanagementservice.payload.response.ResponseSearch;
 import com.example.gamemanagementservice.payload.response.ResponseWrapper;
 import com.example.gamemanagementservice.payload.resquest.RequestSearch;
@@ -179,6 +180,29 @@ public class GameDetailServiceImpl implements IGameDetail {
             return ResponseWrapper.fromData(searchList, 200);
         } catch (Exception e) {
             return new ResponseWrapper<>(null, 500, e.getMessage());
+        }
+    }
+
+    @Override
+    public ResponseWrapper<List<ResponseRecommend>> getRecommendGameByGenre(List<String> genres) {
+        try {
+            List<ResponseRecommend> responseRecommendList = new ArrayList<>();
+
+            for (String genre : genres) {
+                List<GameDetail> gameDetailList = gameRepository.findByGenreContaining(genre);
+                ResponseRecommend responseRecommend = ResponseRecommend.builder()
+                        .genre(genre)
+                        .gameDetailList(gameDetailList)
+                        .build();
+
+                responseRecommendList.add(responseRecommend);
+            }
+
+            return responseRecommendList.isEmpty() ?
+                    ResponseWrapper.fromError("Not found any games", 404) :
+                    ResponseWrapper.fromData(responseRecommendList, 200);
+        } catch (Exception e) {
+            return ResponseWrapper.fromError(e.getMessage(), 500);
         }
     }
 }

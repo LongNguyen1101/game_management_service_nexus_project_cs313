@@ -1,6 +1,7 @@
 package com.example.gamemanagementservice.service.interfaceservice;
 
 import com.example.gamemanagementservice.models.GameDetail;
+import com.example.gamemanagementservice.payload.response.ResponseRecommend;
 import com.example.gamemanagementservice.payload.response.ResponseSearch;
 import com.example.gamemanagementservice.payload.response.ResponseWrapper;
 import com.example.gamemanagementservice.payload.resquest.RequestSearch;
@@ -24,4 +25,6 @@ public interface IGameDetail{
     ResponseWrapper<List<String>> getOperatingSystem();
 
     ResponseWrapper<List<ResponseSearch>> getGameBySearch(RequestSearch requestSearch);
+
+    ResponseWrapper<List<ResponseRecommend>> getRecommendGameByGenre(List<String> genres);
 }

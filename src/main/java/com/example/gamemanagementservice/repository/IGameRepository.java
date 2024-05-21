@@ -56,4 +56,10 @@ public interface IGameRepository extends MongoRepository<GameDetail, String> {
                     "url: 1, price: 1 } }"
     })
     List<GameDetail> findRandom5Games();
+
+    @Aggregation(pipeline = {
+            "{ $project: { gameId: 1, title: 1, operatingSystem: 1, releaseDate: 1, " +
+                    "price:  1, url: { $arrayElemAt: [ '$url', 0 ] } } }"
+    })
+    List<GameDetail> findByGenreContaining(String genre);
 }

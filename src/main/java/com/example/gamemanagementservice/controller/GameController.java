@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/game")
 @RequiredArgsConstructor
@@ -120,6 +122,19 @@ public class GameController {
     @GetMapping("/search")
     public ResponseEntity<?> getGameBySearch(@RequestBody RequestSearch requestSearch) {
         var responseWrapper = gameDetailService.getGameBySearch(requestSearch);
+
+        if (responseWrapper.getHttpCode() != 200) {
+            return ResponseEntity.status(responseWrapper.getHttpCode())
+                    .body(responseWrapper.getErrMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(responseWrapper.getData());
+    }
+
+    @PostMapping("/get-recommend-by-genres")
+    public ResponseEntity<?> getGameByGenres(@RequestBody List<String> genres) {
+        var responseWrapper = gameDetailService.getRecommendGameByGenre(genres);
 
         if (responseWrapper.getHttpCode() != 200) {
             return ResponseEntity.status(responseWrapper.getHttpCode())
