@@ -119,7 +119,7 @@ public class GameController {
                 .body(responseWrapper.getData());
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<?> getGameBySearch(@RequestBody RequestSearch requestSearch) {
         var responseWrapper = gameDetailService.getGameBySearch(requestSearch);
 
