@@ -51,11 +51,11 @@ public interface IGameRepository extends MongoRepository<GameDetail, String> {
     List<String> findAllOperatingSystem();
 
     @Aggregation(pipeline = {
-            "{ $sample: { size: 5 } }",
+            "{ $match: { _id: { $in: ['42', '136', '49', '135', '145', '149'] } } }",
             "{ $project: { gameId: 1, title: 1, genre: 1, operatingSystem: 1, plotAndGameplay: 1," +
                     "url: 1, price: 1 } }"
     })
-    List<GameDetail> findRandom5Games();
+    List<GameDetail> find6Games();
 
     @Aggregation(pipeline = {
             "{ $match: { genre: { $regex: ?0, $options: 'i' } } }",
